@@ -165,19 +165,8 @@ class Response_get {
                     //                    var $company_name = $project_data_company_data->getElementsByTagName("name")->item(0)->nodeValue;
                     //                }
                     if ($project_status == "active") {
-                        $project_title = $project_name;
-                        if (strlen($project_name) > 18) {
-                            $value = strlen($project_name) - 18;
-                            $project_title = substr($project_name, 0, -$value);
-                            $project_title = $project_title . "...";
-                        }
-                        //                    $project_value = new ProjectClass();
-                        //                    $project_value->setProjectId($project_id);
-                        //                    $project_value->setProjectLastChangedOn($project_last_changed_on);
-                        //                    $project_value->setProjectName($project_title);
-
                         $project_array['data'][$a]['project_id'] = $project_id;
-                        $project_array['data'][$a]['project_title'] = $project_title;
+                        $project_array['data'][$a]['project_title'] = $project_name;
                         $project_array['data'][$a]['project_last_changed_on'] = $project_last_changed_on;
                         $a++;
                     }
