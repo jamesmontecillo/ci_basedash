@@ -124,8 +124,6 @@ class Site extends CI_Controller {
         }
         $data['return_view'] = $return_view;
 
-
-
         $this->load->view('include/template', $data);
     }
 
