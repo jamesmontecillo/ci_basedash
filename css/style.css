@@ -3,7 +3,7 @@ Theme Name: Basedash
 Theme URL:
 Description: The easiest way to visualize the health of your Basecamp projects
 Author: Remotelink Philippines
-Version: 0.1
+Version: 0.1 - 8.16.11
 ----------------------------------------*/
 /* CSS Document */
 html, body, div, span, applet, object, iframe,
@@ -18,10 +18,9 @@ table, caption, tbody, tfoot, thead, tr, th, td, ul, li, ol {
     margin:0;
     padding:0;
 }
-/* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ GOLBAL */
 /* body */
 body {
-    background:url('../images/homepage/bg.png');
+    background:url('../images/pagebg.png');
     font-size:100%;
     font-family:"HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
     line-height:1.429;
@@ -29,64 +28,325 @@ body {
     padding:0
 }
 /* heading */
-h1, h2, h3, h4, h5, h6 { font-weight:normal; margin:0; padding:0 }
+h1, h2, h3, h4, h5, h6 { font-weight:normal }
 .clear { clear:both }
 .left { float:left }
 .right { float:right }
 
 /* HTML5 tags */
-header, section, footer, .footerBD, hgroup, aside, article { display:block }
+header, section, footer, hgroup, aside, article { display:block }
 
 /* Paragraphs */
 * p:last-child {margin-bottom:0 }
 strong, b { font-weight:bold }
 em, i { font-style:italic }
 
-/* home page */
-.panelCtn, .intro, .signup, .otherProd, .footer { width:950px; margin:0 auto }
-#panel, .darkWrapBg, .otherProdCtn { width:100% }
-
-/* dashboard */
-/*body { width: 100% }*/
-.billingCtn1, .billingCtn2 {width:1024px }
-.dashboardCtn { width: 1380px }
-.dashboard, .userPanel, .statBtn, .header,
-.dashletCtn, .darkWrapBgBD, .footerBD { width: 100% }
-
-.billingCtn1, .userPanel, .dashboardCtn, .footerBD, .billingCtn2 { margin:0 auto }
-.darkWrapBg, .darkWrapBgBD { background:#0a0a0a  url(../images/homepage/wrap-bg.png); clear:both }
-
-/* widget Ctn */
-.contentText, .update, .statusCtn { width:300px }
-.panelLogin, .text { text-align:right }
-
-#panel, .panelCtn { height:130px } /* height for top login */
-.text, .tab { width:950px }
-
+/* --- global use */
+.darkBg { background:#0a0a0a  url(../images/darkbg.png) }
+.subTitle { font:normal 1.4em 'Droid Sans', serif; }
+.mleftright { margin-left:10px; margin-right:10px }
+.mright10 { margin-right:10px }
+.mleft10 { margin-left:10px }
+/* error, message, success displaying */
+.errorCtn, .successCtn {
+    border-bottom:1px dashed #232323;
+    font-size:14px;
+    padding:10px 0 10px 22px;
+    margin-bottom:10px;
+    width:100%
+}
+.errorCtn { background:url(../images/error.png) left no-repeat; color:#e16969 }
+.successCtn { background:url(../images/success.png) left no-repeat; color:#95e397 }
+/* colors */
 .red { background:#f52626 }
 .orange { background:#ff6501 }
 .yellow { background:#efdf2f }
 .green { background:#40c542 }
 .blue { background:blue }
 .disabled { background:#666 }
-.spaceTop {margin-top:20px}
+.redtext { color:#f52626 }
 
-.redtxt {color: #f52626}
-/* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ LOGIN CTN */
+ul li.whiteb     { border-top:1px solid white }
+ul li.redb     { border-top:1px solid red }
+ul li.orangeb  { border-top:1px solid orange }
+ul li.yellowb  { border-top:1px solid yellow }
+ul li.greenb   { border-top:1px solid green }
+ul li.disb     { border-top:1px solid grey }
+
+/* FORMS and POPUPS */    
+/**/
+.formMessage { margin-left:20px; width:660px }
+.formCtn {
+    color:#fff;
+    font-size:13px;
+    margin:0 20px;
+    padding:0;
+    width:320px
+}
+.formCtn label { float:left; margin-top:12px }
+/*billing and account*/
+.billing-info, .account-setting { color:#fff; font-size:13px; width:720px }
+.billing-info { height:500px }
+.account-setting { height:330px }
+.account-setting small { color:#CECECE; font-size:12px }
+/* registration */
+.registration { color:#fff; height:500px; width:550px }
+    .col1 { background:url(../images/homepage/registration-bg.png); float:left; height:422px; width:200px }
+    .col2 { float:right; margin-top:20px; width:330px }
+        .registration .col2 .subTitle { margin-bottom:20px }
+.registration p { color:#4b4a4a; font:normal 12px Arial; margin:5px 0 10px 0 }
+.registration a:link, .registration a:visited { color:#4b4a4a; text-decoration:none }
+.registration a:hover { color:#666; text-decoration:underline }
+
+/* input field */
+.field {
+    background:#232323;
+    border:1px #1d1d1d solid;
+    color:#CECECE;
+    height:40px;
+    margin:6px 0px 0 0;
+    padding:0 10px;
+    width:300px
+}
+.field:focus { background:#313131; border:1px #292929 solid; outline:none }
+/* basedash */
+.adjusted-width {
+    width:1020px;
+    /* 1020px = 3 widget per row */
+    /* 1360px = 4 widget per row */
+    /* 2040px = 6 widget per row */
+    /* 2720px = 8 widget per row */
+    /* 3400px = 10 widget per row */
+    clear:both;
+    display:block;
+    margin:0 auto;
+}
+/* top navigation */
+ul.dropdown { float:right }
+    ul.dropdown, ul.dropdown li { font-size:12px; list-style:none; padding:0 }
+    ul.dropdown li { float:left; margin:0; }
+    ul.dropdown li.hover, ul.dropdown li:hover { cursor:default; position:relative }
+    ul.dropdown ul {
+        left:0;
+        position:absolute;
+        top:100%;
+        visibility:hidden;
+        width:100%;
+        z-index:1
+    }
+    ul.dropdown li.subnav { }
+    ul.dropdown ul li { float:none; }
+    ul.dropdown ul ul { left:99%; top:1px }
+    ul.dropdown li:hover > ul { visibility:visible }
+    ul.dropdown li { color:#666; padding:4px 3px; margin:0 0 0 10px }
+    ul.dropdown li:hover.nobg { background:transparent}
+    ul.dropdown li.hover, ul.dropdown li:hover  { background:#666; color:#ddd }
+    ul.dropdown li:hover a { color:#ddd }
+    ul.dropdown a:link, ul.dropdown a:visited { color:#666; text-decoration:none }
+    ul.dropdown a:hover { color:#fff }
+        ul.dropdown ul { border-top:1px solid #333; width:120px }
+        ul.dropdown ul li { background:#000; font-size:12px; padding:3px 10px; margin:0 0 1px }
+/* header */
+.header { border-bottom:1px solid #212121; height:120px; margin-top:15px; padding:0 }
+ .imgLogo { height:35px; margin:20px 0 0 10px  }
+    .projects { float:right; margin-right:10px }
+        .projects h1 { color:#fff; font:normal 4.6em 'Droid Sans', serif; height:70px; margin:0; padding:0 }
+        .topSub { color:#fff; font-size:1.5em }
+/* project status*/    
+.statBtn { color:#666; float:left; height:30px }
+.statBtn ul { list-style:none; padding:0 }
+.statBtn ul li {
+    background:#222;
+    display:inline;
+    font:normal 0.8125em "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+    height:50px;
+    margin:0;
+    padding:5px 15px
+}
+.statBtn ul li:hover, .statBtn ul li.active { background:#3f3f3f }
+.statBtn ul li a { color:#fff; text-decoration:none; text-transform:uppercase }
+   /* dashlet/widget count displaying */
+    .dashletCount { float:right; height:30px; margin:0 10px 0 0 }
+    .dashletCount ul li {
+        background:#222;
+        display:inline;
+        font:normal 0.8125em "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+        height:50px;
+        margin:0 0 0 4px;
+        padding:5px 15px
+    }
+    .dashletCount ul li:hover { background:#000 }
+    .dashletCount ul li a { color:#fff; text-decoration:none; text-transform:uppercase }
+/* widget */
+.dashletWrap { color:#fff; margin-top:40px; border:1px solid transparent; min-height:550px }
+.widgetCtn {
+    float:left;
+    min-height:255px;
+    margin:0 9px 13px 9px;
+    padding-bottom:2px;
+    width:322px;   
+    -webkit-border-radius:0 0 3px 3px;
+    -moz-border-radius:0 0 3px 3px;
+    border-radius:0 0 3px 3px
+}
+    /* top title */
+    .widgetTitle {
+        background:#fff url(../images/dashboard/title-bg.png) top repeat-x;
+        height:40px;
+        line-height:40px;
+        -webkit-border-radius:3px 3px 0 0;
+          -moz-border-radius:3px 3px 0 0;
+               border-radius:3px 3px 0 0;
+    }
+        .widgetTitle h2 { font-size:1.13em; float:left; margin-left:10px; text-transform:uppercase }
+            .widgetTitle .imgArrow { border:none; margin:10px 10px 0 0; outline:none; filter:alpha(opacity=70); opacity:0.7 }
+                .widgetTitle .imgArrow:hover { filter:alpha(opacity=100); opacity:1 }
+            /* text Ctn */
+            .widgetText {
+                border:1px solid #222;
+                background:#0a0a0a  url(../images/darkbg.png);
+                clear:both;
+                float:left;
+                width:320px
+            }
+                .update { color:#bdbcbd; font-size:.6em; margin:5px 10px 0; text-align:right }
+                .update .milestone {
+                    border:1px solid #424242;
+                    font-weight:bold;
+                    margin-left:5px;
+                    padding:2px 3px;
+                    background:#727272; /* old browsers */
+                    background:-moz-linear-gradient(top, #727272 0%, #191919 100%); /* firefox */
+                    background:-webkit-gradient(linear, left top, left bottom, color-stop(0%,#727272), color-stop(100%,#191919)); /* webkit */
+                }
+                    .update .milestone a { color:#fff; text-decoration:none }
+                    .widgetText .contentText {
+                        font-size:.75em;
+                        height:100px;
+                        line-height:15px;
+                        margin:5px 10px 0;
+                        text-align:left
+                    }
+                /* status/progress */
+                .statusCtn { float:left; margin:0 10px }
+                    .statusCtn h3 {
+                        float:right;
+                        font:normal 65px/80px 'Droid Sans', serif;
+                        height:55px;
+                        margin:0;
+                        padding:0
+                    }
+                    .statusCtn .sub {
+                        font-size:.75em;
+                        font-weight:bold;
+                        float:left;
+                        height:65px;
+                        line-height:115px
+                    }
+                    /* bar */
+                    div.progress-status {
+                        background:#fff;
+                        border:1px solid #aeaeae;
+                        float:left;
+                        margin:7px 0px 10px;
+                        padding:1px
+                    }
+                    div.progress-status { width:300px; }
+                    div.progress-status > div {
+                        border:1px solid #848484;
+                        font-weight:bold;
+                        height:25px;
+                        line-height:25px;
+                        text-align:right;
+                        text-shadow: #000 1px 0px 3px
+                     }
+                     .update .milestone, div.progress-status, div.progress-status > div {
+                        -webkit-border-radius:3px;
+                           -moz-border-radius:3px;
+                                border-radius:3px
+                     }
+.noproject {
+    font-family:'Droid Sans', serif;
+    margin:0 10px 13px;
+    border:1px dotted #000;
+    background:#222;
+    padding:5px 10px;
+}
+/* updating XML */
+.resultXml { color:#fff; margin:2% auto;  text-align:center; width:500px }
+.resultXml h1 { color:#ddd; font:normal 2em 'Droid Sans', serif; margin-bottom:10px }
+.resultXmlTxt {
+    border-top:1px dashed #232323;
+    font-size:14px;
+    padding:30px 0;
+    text-align:center
+}
+/* milestone */
+.pagemilestone { margin:0 auto; width:95% }
+.milestonCtn {
+    color:#fff;
+    font-size:13px;
+    width:100%;
+    min-height:450px;
+    margin:20px 0 0;
+}
+    .milestonCtn h1 { font:normal 1.8em 'Droid Sans', serif; float:left; margin:20px 0 15px }
+    .milestonCtn h2 { font:normal 14px 'Droid Sans', serif; float:right; color:#c9c8c8; margin:30px 0 0 }
+    .milestoneContent { background:#202020 }
+    .milestoneContent:nth-child(even) { background:none }
+    .milestoneContent { line-height:18px; padding:15px 0px; width:100%;  }
+    .milestoneHeading {
+        background:#69af3b;
+        color:#fff;
+        font-size:15px;
+        font-weight:bold;
+        padding:6px 0px;
+        width:100%
+    }
+        .milestone-title, .responsible, .status, .complete, .orig-due, .due-date { float:left; margin-right:15px }
+        .milestone-title { margin-left:10px; width:40% }
+        .responsible { width:10% }
+        .status {
+            text-align:center;
+            width:10%;
+            -webkit-border-radius:3px;
+             -khtml-border-radius:3px;
+               -moz-border-radius:3px;
+                    border-radius:3px
+        }
+        .complete { text-align:center; width:10% }
+        .orig-due { width:10% }
+        .due-date { width:10% }
+/* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ HOME PAGE */
+.panelCtn, .intro, .signup, .otherProd, .footer { width:950px; margin:0 auto }
+#panel, .darkWrapBg, .otherProdCtn, .fullwidth { width:100% }
+.otherProdCtn { margin-bottom:300px }
+/* login */
+.panelCtn .errormessage {
+    color:#e16969;
+    float:left;
+    font-weight:bold;
+    font-size:12px;
+    letter-spacing:1px;
+    margin:20px 0 0;
+    text-align:right;
+    width:950px
+}
 #panel {
     background:#000;
     color:#999999;
     display:none;
     overflow:hidden;
 }
-    .panelCtn { background:url('../images/homepage/login-bg.png') bottom left no-repeat }
-        .panelLogin { padding-top:30px }
+    .panelCtn { background:url('../images/homepage/login-bg.png') bottom left no-repeat; height:134px }
+        .panelForm { padding-top:30px }
         .text { font-size:0.75em }
         .formLabel {
             color:#fff;
+            float:right;
             font-size:1.25em;
-            margin-top:10px;
-            padding:0 17px 0 20px
+            margin:36px 20px 0 0 ;
+            padding:0;
         }
         .inputCtn { font-size: 0.6875em; float:left; padding:6px 0 0 10px }
             .inputCtn input.field {
@@ -106,636 +366,107 @@ em, i { font-style:italic }
                 display:block;
                 margin:8px 5px 0 5px
             }
-            .inputCtn input.bt_login { background: transparent url(../images/homepage/bt_login.png) no-repeat 0 0; width:60px }
-/* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Intro */
+            .inputCtn input.bt_login { background:transparent url(../images/homepage/bt_login.png) no-repeat 0 0; width:60px }
     /* tab layout */
-    .tab { margin:0 auto }
-        .tab ul.login {
+    .tab { margin:0 auto; width:950px }
+    .tab ul.login {
+        color:#9a9a9a;
+        float:right;
+        margin:0;
+        padding:0px;
+        text-align:center;
+    }
+        .tab ul.login li {
             background:#000;
-            color:#9a9a9a;
-            float:right;
-            height:30px;
-            margin:0;
-            padding:0px;
-            text-align:center;
+            display:block;
+            float:left;
+            height:27px;
+            padding:5px 15px 0;
+            text-align:left;
+            margin-left:5px;
             -webkit-border-radius:0 0 5px 5px;
                -moz-border-radius:0 0 5px 5px;
                     border-radius:0 0 5px 5px
         }
-            .tab ul.login li {
-                display:block;
-                float:left;
-                height:30px;
-                padding:5px 0px 0 15px;
-                text-align:left
-            }
-            .tab ul.login li a { color:#d6d6d6; font-size:12px; width:100px; text-decoration: none }
-            .tab a.open, .tab a.close {
-                cursor:pointer;
-                display:block;
-                height:20px;
-                line-height:20px !important;
-                padding-left:28px;
-                position:relative;
-                width:80px
-            }
-            .tab a.open         { background:url(../images/homepage/bt_open.png) no-repeat left 0 }
-            .tab a.close        { background:url(../images/homepage/bt_close.png) no-repeat left 0 }
-            .tab a:hover.open   { background:url(../images/homepage/bt_open.png) no-repeat left -19px }
-            .tab a:hover.close  { background:url(../images/homepage/bt_close.png) no-repeat left -19px }
-    /* start */
-    #intro              { min-height:480px; height:auto!important; height:480px}
-    #intro p            { font-size:0.875em; margin-left:5px; padding:0 }
-    .intro              { background:url('../images/homepage/introtop.png') top left no-repeat }
-        .introText      { margin-top:140px; width:370px; color:#fff }
-            .title      { font:normal 3.5em 'Droid Sans', serif; margin-bottom: 8px; text-shadow:1px 2px 3px #000 }
-            .subTitle   { font:normal 1.4em 'Droid Sans', serif; margin:0 0 0 5px }
-        .screenShot     { margin-top:65px; margin-left:450px; position:absolute }
-            .sRed       { cursor:pointer; margin-left:60px; position: absolute; z-index:3 }
-            .sGreen     { cursor:pointer; margin:10px 0 0 150px; position: absolute; z-index:2 }
-            .sYellow    { cursor:pointer; margin-top:10px; position:absolute; z-index:1 }
-        #launch {
-                background-image:url(../images/homepage/button.png);
-                background-position:238px 0;
-                cursor:pointer;
-                display:block;
-                height:57px;
-                text-decoration:none;
-                margin-top:10px;
-                width:238px
-            }
-            #launch:hover, #launch:active  { background-position:0 0 }
-/* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ --content -- */
-.signup {
-    border-bottom:1px dashed #2a2a2a;
-    height:60px;
-    margin-bottom:30px;
-    padding:30px 0
-}
-    .boxesLine {
-        border-right:1px dashed #2a2a2a;
-        height:60px;
-        margin:0 32px;
-        width:1px
-    }
-    .boxes { color:#505050; height:60px; width:270px }
-        .boxesImg { float:left; margin-right:10px }
-        .boxesTxt {
-            float:left;
-            font-size:1.25em;
-            margin-top:10px;
-            text-shadow:1px 1px 2px #0b0b0b;
-            width:200px
+        .tab ul.login li a { color:#d6d6d6; font-size:12px; text-decoration:none }
+        .tab a#close_user, .tab a#close_forgot  { display:none }
+        .tab a.open, .tab a.close {
+            cursor:pointer;
+            display:block;
+            height:20px;
+            line-height:20px !important;
+            padding-left:28px;
+            position:relative;
         }
-/* product boxes */
-.boxgrid {
-/*    background:#1e1e1e;*/
-    float:left;
-    margin:0px 60px 0 40px;
-    min-height:163px;
-    overflow:hidden;
-    padding:20px 0 0 0px;
-    position:relative;
-    width: 220px;
-    border-bottom:2px solid #111;
-}
-    .cover { position:absolute }
-    .boxgrid .img { position:absolute }
-    
-/*    .boxgrid p {
-        color:#646464;
-        margin:5px 0 0 20px;
-        position:absolute;
-        width:170px;
-        z-index:1
-    }*/
-    .prodTitle { font:normal 2em 'Droid Sans', serif; margin-bottom:20px; color:#e5e4e4 }
-/*    .p1 { color:#587341 }
-    .p2 { color:#37786f }
-    .p3 { color:#334871 }
-        .boxgrid:hover .p1 { color:#66a731 }
-        .boxgrid:hover .p2 { color:#34a99a }
-        .boxgrid:hover .p3 { color:#315194 }
-        .boxgrid:hover p { color:#bababa }
-*/        .boxgrid:last-child { margin:0px 0px 0 40px; }
-/* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ REG */
-.billingCtn {color:#fff; font-size:13px; width:750px; height:400px}
-.billingStn {padding:0 30px; color:#fff; font-size:13px; width:300px;}
-.acntStn { padding:0 30px; color:#fff; font-size:13px; width:350px; height:400px }
-.regCtn {width:550px; height:500px; color:#fff;}
-.regCtn p, .acntStn p { font:normal 12px Arial; margin:5px 0 10px 0;}
-.regCtn p { color:#4b4a4a}
-.acntStn p { color:#CECECE}
-.regCtn a:link, .regCtn a:visited { color:#4b4a4a; text-decoration:none }
-.regCtn a:hover { color:#666; text-decoration:underline }
-.regfield {
-    background:#232323;
-    border:1px #1d1d1d solid;
-    color:#CECECE;
-    height:40px;
-    margin:6px 0px 0 0;
-    width:300px;
-    padding:0 10px;
-}
-.regfield:focus { background:#313131; border:1px #292929 solid; outline:none }
-
-.resultXml { margin:10% auto 0 auto; width:422px; color:#fff}
-.resultXmlTxt {
-    border-top:1px dashed #232323;
-    padding:30px 0;
-    text-align:center;
-
-}
-
-.errorCtn { padding:10px 0 10px 22px; background:url(../images/homepage/error.png) left no-repeat; 
-            color:#d2d2d2;
-            border-bottom:1px dashed #232323;
-            margin-bottom:10px;
-            width:100% /*250px*/
-} 
-
-
- /* contact */
-/* .billingCtn2 {border:1px solid red}*/
- .bLeft {width:350px;color:#fff}
- .bContent hgroup {width:320px; margin:30px 0 0 15px;}
- .bContent {height:700px; margin-top:30px}
-        .billingbtn { width:250px; color:#fff; font-size:13px;margin-right:30px }
-        .contactUs { width:620px; color:#fff; font-size:13px; border-left:2px dotted #232323 }
-            .contactUs label.form { 
-                clear:left;
+        .tab a.open { background:url(../images/homepage/bt_open.png) no-repeat left 0 }
+        .tab a.close { background:url(../images/homepage/bt_close.png) no-repeat left 0 }
+        .tab a:hover.open { background:url(../images/homepage/bt_open.png) no-repeat left -19px }
+        .tab a:hover.close { background:url(../images/homepage/bt_close.png) no-repeat left -19px }
+    /* page intro */
+    #intro { min-height:480px; height:auto!important; height:480px}
+    #intro p { font-size:0.875em; margin-left:5px; padding:0 }
+    .intro { background:url('../images/homepage/introtop.png') top left no-repeat }
+        .introText { margin-top:140px; width:370px; color:#fff }
+            .title { font:normal 3.5em 'Droid Sans', serif; margin-bottom: 8px; text-shadow:1px 2px 3px #000 }
+            .introText .subTitle { margin:0 0 0 5px }
+        .screenShot { margin-top:65px; margin-left:450px; position:absolute }
+            .sRed { cursor:pointer; margin-left:60px; position: absolute; z-index:3 }
+            .sGreen { cursor:pointer; margin:10px 0 0 150px; position: absolute; z-index:2 }
+            .sYellow { cursor:pointer; margin-top:10px; position:absolute; z-index:1 }
+        /* button */
+        #launch {
+            background-image:url(../images/homepage/button.png);
+            background-position:238px 0;
+            cursor:pointer;
+            display:block;
+            height:57px;
+            text-decoration:none;
+            margin-top:10px;
+            width:238px
+        }
+            #launch:hover, #launch:active  { background-position:0 0 }
+    /* signup */
+    .signup {
+        border-bottom:1px dashed #2a2a2a;
+        height:60px;
+        margin-bottom:30px;
+        padding:30px 0
+    }
+        .boxesLine { border-right:1px dashed #2a2a2a; height:60px; margin:0 32px }
+        .boxes { color:#505050; height:60px; width:270px }
+            .boxes h2 {
                 float:left;
-                margin:5px 0 0px 0px;
-                height:40px;
-                padding:0px 10px;
-                text-align:right;
-                width:200px;
-                line-height:40px;
+                font-size:1.25em;
+                margin-top:10px;
+                text-shadow:1px 1px 2px #0b0b0b;
+                width:200px
             }
-            .contactUs .input{
-                background:#232323;
-                border:1px #1d1d1d solid;
-                color:#CECECE;
-                height:40px;
-                width:340px;
-                padding:0 10px;
-                font-size:13px;
-                float:left;
-                margin:5px 0 10px 8px;
-                outline:none;
-            }
-            .input:hover, .input:focus { background:#313131; border:1px #292929 solid; outline:none }
-            .billingbtn input[type=submit]{ font: bold 15px Helvetica, Sans-Serif; padding:6px 20px; margin:10px 0 20px }
+            .icon { width:50px; height:53px; float:left; margin-right:10px }
+            .launch { background: url('../images/homepage/signup-icon.png') 0 0 }
+            .like { background: url('../images/homepage/signup-icon.png') 50px 0 }
+            .free { background: url('../images/homepage/signup-icon.png') 100px 0 }
+    /* product boxes */
+    .boxgrid {
+        float:left;
+        margin:0px 60px 0 40px;
+        min-height:163px;
+        overflow:hidden;
+        padding:20px 0 0 0px;
+        position:relative;
+        width: 220px;
+        border-bottom:2px solid #111;
+    }
+        .cover { position:absolute }
+        .boxgrid .img { position:absolute }
+    .otherProd h1 { font:normal 2em 'Droid Sans', serif; margin-bottom:20px; color:#e5e4e4 }
+    .boxgrid:last-child { margin:0px 0px 0 40px; }
 /* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Footer */
-.footer, .footerBD{
-    clear:both;
+.footer { color:#424242; padding:15px 0; text-align:right }
+.globalfooter, .pagemilestone footer {
+    border-top:1px dashed #0e0e0e;
     color:#424242;
-    margin-top:300px;
-    padding:20px 0;
+    padding:15px 0;
     text-align:right
 }
-.footer .dashboard, .footerBD .dashboard { height: 30px; line-height:30px }
-/* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ BASEDASH DASHBOARD */
-.userPanel { color:#666; height:30px }
-    .userPanel ul {
-        float:right;
-        list-style:none;
-        margin:0; 
-        padding:0
-    }
-    .userPanel ul li {
-        border-right:1px solid #212121;
-        display:inline;
-        font:normal 12px "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-        padding:0 5px;
-        margin:0
-    }
-        .userPanel ul li.hlight { border-right:none; color:#fd685c }
-
-    .userPanel ul li a:link, .userPanel ul li a:visited { color:#666; text-decoration:none }
-    .userPanel ul li a:hover { color:#ddd; text-decoration:none }
-/* header */
-.dashboardCtn { clear:both; text-align:left }
-    .header { border-bottom:1px solid #212121; padding:10px 0; margin:0px }
-     .imgLogo { margin:20px 0 0 10px; height:35px }
-        .header h1 { font:normal 4.6em 'Droid Sans', serif; color:#fff; margin:0; padding:0; height:70px }
-        .topSub { font-size:1.5em; color:#fff }
-    .statBtn {
-        float:left;
-        color:#666;
-        height:30px;
-        margin:0;
-        max-width:790px;
-    }
-    .statBtn ul {
-        list-style:none;
-        margin:0 0 0 10px;
-        padding:0;
-    }
-    .statBtn ul li.sort { background:#ddd}
-    .statBtn ul li {
-        background:#222;
-        display:inline;
-        font:normal 0.8125em "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-        height:50px;
-        margin:0;
-        padding:5px 15px;
-/*        border: 1px solid red*/
-    }
-    .statBtn ul li:hover { background:#000 }
-    .statBtn ul li.active { background:#000 }
-    .statBtn ul li a { color:#fff; text-decoration:none; text-transform:uppercase }
-        .statBtn ul li.whiteb     { border-top:1px solid white }
-        .statBtn ul li.redb     { border-top:1px solid red }
-        .statBtn ul li.orangeb  { border-top:1px solid orange }
-        .statBtn ul li.yellowb  { border-top:1px solid yellow }
-        .statBtn ul li.greenb   { border-top:1px solid green }
-        .statBtn ul li.disb     { border-top:1px solid grey }
-    
-/* widget content start here */
-    .dashletBtn {
-        float:right;
-        color:#666;
-        height:30px;
-        margin:0;
-/*        max-width:auto;*/
-    }
-    .dashletBtn ul {
-        list-style:none;
-        margin:0;
-        padding:0;
-    }
-
-    .dashletBtn ul li {
-        background:#222;
-        display:inline;
-        font:normal 0.8125em "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-        height:50px;
-        margin:0 0 0 4px;
-        padding:5px 15px;
-    }
-    .dashletBtn ul li:hover { background:#000 }
-    .dashletBtn ul li a { color:#fff; text-decoration:none; text-transform:uppercase }
-        .dashletBtn ul li.greenb   { border-top:1px solid green }
-        
-        .dashletCtn { float:left; margin-top: 30px; min-height: 500px; color:#fff; }
-        .dashletCtn1 { color:#fff; position:relative; top:-100px; }
-/*        .widgetCtn:hover {cursor: move}*/
-            .widgetCtn {
-                float:left;
-                min-height:255px;
-                margin:0 9px 13px 9px;
-                padding-bottom:2px;
-                -webkit-border-radius:0 0 3px 3px;
-                   -moz-border-radius:0 0 3px 3px;
-                        border-radius:0 0 3px 3px
-            }
-                /* top title */
-                .widgetTitle {
-                    background:#fff url(../images/dashboard/title-bg.png) top repeat-x;
-                    height:40px;
-                    line-height:40px;
-                    -webkit-border-radius:3px 3px 0 0;
-                      -moz-border-radius:3px 3px 0 0;
-                           border-radius:3px 3px 0 0
-                }
-                    .widgetTitle h2 {
-                        font-size:1.13em;
-                        float:left;
-                        margin-left:10px;
-                        text-transform:uppercase
-                    }
-                    .widgetTitle .imgArrow {
-                        border:none;
-                        margin:10px 10px 0 0;
-                        outline:none;
-                        filter:alpha(opacity=70);
-                        opacity:0.7
-                    }
-                    .widgetTitle .imgArrow:hover { filter:alpha(opacity=100); opacity:1 }
-                /* text Ctn */
-                .widgetText {
-                    border:1px solid #222;
-                    background:#0a0a0a  url(../images/homepage/wrap-bg.png);
-                    clear:both;
-                    float:left;
-                    width:320px
-                }
-                    .update {
-                        color:#bdbcbd;
-                        font-size:.6em;
-                        margin:5px 10px 0 10px;
-                        text-align:right
-                    }
-                    .update .milestone {
-                        border:1px solid #424242;
-                        padding:2px 3px;
-                        font-weight:bold;
-                        margin-left:5px;
-                        -webkit-border-radius:3px;
-                        -moz-border-radius:3px;
-                        border-radius:3px;
-                            background:#31a0e3; /* old browsers */
-    background:-moz-linear-gradient(top, #727272 0%, #191919 100%); /* firefox */
-    background:-webkit-gradient(linear, left top, left bottom, color-stop(0%,#727272), color-stop(100%,#191919)); /* webkit */
-/*    background:-moz-linear-gradient(top, #191919 0%, #727272 100%);  firefox 
-    background:-webkit-gradient(linear, left top, left bottom, color-stop(0%,#191919), color-stop(100%,#727272));  webkit */
-
-                    }
-                    .update .milestone a { text-decoration:none; color:#fff}
-                    .widgetText .contentText {
-                        font-size:.75em;
-                        height:100px;
-                        line-height:15px;
-                        margin:5px 10px 0 10px;
-                        text-align:left;
-                    }
-                    /* status/progress */
-                    .statusCtn { margin:0 10px;float: left  }
-                        .statusCtn h3 {
-                            float:right;
-                            font:normal 4.1em 'Droid Sans', serif;
-                            height:55px;
-                            line-height:80px;
-                            margin:0;
-                            padding:0;
-                        }
-                        .statusCtn .sub {
-                            font-size:.75em;
-                            font-weight:bold;
-                            float:left;
-                            height:65px;
-                            line-height:115px
-                        }
-                        /* bar */
-                        div.progress-status {
-                            background:#fff;
-                            border:1px solid #aeaeae;
-                            float:left;
-                            margin:7px 0px 10px 0;
-                            padding:1px;
-                            -webkit-border-radius:3px;
-                               -moz-border-radius:3px;
-                                    border-radius:3px;
-                        }
-                        div.progress-status { width:300px }
-                        div.progress-status > div {
-                            border:1px solid #848484;
-                            font-weight:bold;
-                            height:25px;
-                            line-height:25px;
-                            text-align:right;
-                            text-shadow: #000 1px 0px 3px;
-                            -webkit-border-radius:3px;
-                               -moz-border-radius:3px;
-                                    border-radius:3px
-                         }
-/* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ BASEDASH DASHBOARD Drop down*/
-
-
-/*div#container
-	{ width:740px; position:absolute; left:50%; margin:0 -380px; background:#ffffff; border:10px solid #b9121b; height:400px; }
-
-h1
-	{ width:738px; margin:1px; color:#4C1B1B; font:helvetica; font-size:24pt; overflow:hidden; padding:80px 0 0; vertical-align:middle; text-align:right; }
-p	{ margin:0; padding:1.2em; }
-p a:link,
-p a:visited,
-p a:hover,
-p a:active
-	{ font-weight:bold; color:#b9121b; }*/
-
-ul#navigation-1
-	{
-        
-            display:inline;
-            margin:0;
-            padding:0 3px;
-/*            padding:1px 0;*/
-            list-style:none;
-            width:auto;
-/*            width:100%;*/
-            height:21px;
-/*            border-right:1px solid #212121;*/
-/*            border-top:1px solid #b9121b;
-            border-bottom:1px solid #b9121b;*/
-            font:normal 12px "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-/*            font:normal 8pt verdana, arial, helvetica;*/
-        }
-ul#navigation-1 li
-	{
-            margin:0;
-            padding:4px;
-            display:block;
-            text-align:center;
-            float:left;
-            position:relative;
-/*            width:148px;*/
-        }
-ul#navigation-1 li a:link,
-ul#navigation-1 li a:visited
-	{
-            padding:4px 0;
-            display:block;
-            text-decoration:none;
-/*            background:#b9121b;*/
-            color:#666;
-/*            color:#ffffff;*/
-            min-width:100px;
-            height:13px;
-        }
-ul#navigation-1 li:hover a,
-ul#navigation-1 li a:hover,
-ul#navigation-1 li a:active
-	{
-            padding:4px 0;
-            display:block;
-            text-decoration:none;
-            background:#000;
-            color:#ddd;
-            min-width:100px;
-            height:13px;
-/*            border-left:1px solid #ffffff;
-            border-right:1px solid #ffffff;*/
-        }
-
-ul#navigation-1 li ul.navigation-2
-	{ 
-            margin:0;
-            padding:1px 1px 0;
-            list-style:none;
-            display:none;
-            background:#000;
-            width:165px;
-            position:absolute;
-/*            top:21px;
-            left:-1px;
-            border:1px solid #b9121b;
-            border-top:none;*/
-        }
-ul#navigation-1 li:hover ul.navigation-2
-	{ display:block; }
-ul#navigation-1 li ul.navigation-2 li
-	{ clear:left; width:156px; text-align:left; }
-
-ul#navigation-1 li ul.navigation-2 li a:link,
-ul#navigation-1 li ul.navigation-2 li a:visited
-	{
-            clear:left;
-            background:#000;
-            padding:4px 0;
-            width:146px;
-            border:none;
-/*            border-bottom:1px solid #ffffff;*/
-            position:relative;
-            z-index:1000;
-        }
-ul#navigation-1 li ul.navigation-2 li:hover a,
-ul#navigation-1 li ul.navigation-2 li a:active,
-ul#navigation-1 li ul.navigation-2 li a:hover
-	{
-            clear:left;
-            background:#696969;
-            padding:4px 0;
-            width:146px;
-            border:none;
-/*            border-bottom:1px solid #ffffff; */
-            position:relative;
-            z-index:1000;
-        }
-
-ul#navigation-1 li ul.navigation-2 li ul.navigation-3
-	{
-            display:none;
-            margin:0;
-            padding:0;
-            list-style:none;
-            position:absolute;
-            left:145px;
-            top:-2px;
-            padding:1px 1px 0 1px;
-            background:#000;
-/*            border:1px solid #b9121b;*/
-/*            border-left:1px solid #b9121b;*/
-/*            background:#ffffff;*/
-            z-index:900;
-        }
-ul#navigation-1 li ul.navigation-2 li:hover ul.navigation-3
-	{ display:block; }
-ul#navigation-1 li ul.navigation-2 li ul.navigation-3 li a:link,
-ul#navigation-1 li ul.navigation-2 li ul.navigation-3 li a:visited
-	{ background:#000; }
-ul#navigation-1 li ul.navigation-2 li ul.navigation-3 li:hover a,
-ul#navigation-1 li ul.navigation-2 li ul.navigation-3 li a:hover,
-ul#navigation-1 li ul.navigation-2 li ul.navigation-3 li a:active
-	{ background:#696969; }
-        
-ul#navigation-1 li ul.navigation-2 li a span
-	{ position:absolute; top:0; left:132px; font-size:12pt; color:#fe676f; }
-ul#navigation-1 li ul.navigation-2 li:hover a span,
-ul#navigation-1 li ul.navigation-2 li a:hover span
-	{ position:absolute; top:0; left:132px; font-size:12pt; color:#ffffff; }
-
-
- /*
-  Homepage slider
-*/
-.anythingSlider                         { width: 100%; min-height:910px; position: relative; margin:0; padding:0;}
-.anythingSlider .wrapper                { width: 1024px; overflow: hidden; min-height:910px; margin:0;position: absolute; top: 0; left: 0}
-
-                                        /* Width below is max for Opera */
-.anythingSlider .wrapper ul             { width: 20000px; list-style: none; padding:0; margin:0; position: absolute; top: 0; left: 0; }
-.anythingSlider ul li.slider                   { display: block; float: left; padding: 0; min-height:910px; width:1024px; margin: 0; }
-.anythingSlider .arrow                  { visibility:hidden }
-.anythingSlider .forward                { visibility:hidden }
-.anythingSlider .back                   { visibility:hidden }
-
-#thumbNav                               { height:50px; margin:0; padding:0px; position:absolute; top:-60px; right:9px}
-#thumbNav a                             { width:1.25em; height:1.25em; display: inline-block; padding:3px; margin: 0 2px 0 2px; background:#222;
-                                         color:#d2d2d2;text-align: center; font:normal 12px verdana; text-decoration: none;}
-#thumbNav a:hover                       { background:#000;}
-#thumbNav a:active                      { background:#000;}
-#thumbNav a.cur                         { background:#000;}
-
-#start-stop                             { visibility:hidden; }
-#start-stop.playing                     { visibility:hidden; }
-#start-stop:hover                       { visibility:hidden; }  
-
-.anythingSlider .wrapper ul ul          { position: static; margin: 0; background: none; overflow: visible; width: auto; border: 0; }
-.anythingSlider .wrapper ul ul li       { float: none; height: auto; width: auto; background: none; }
-
-/*++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ MILE STONE*/
-/*.milestonCtn {
-    color:#fff;
-    font-size:13px;
-    width:1380px;
-}
-.milestoneContent { background: #202020; }
-.milestoneContent:nth-child(even) {background: none}
-.milestoneContent { line-height:18px; padding:15px 10px; width:1370px }
-
-.milestoneHeading {
-    background:#69af3b;
-    color:#fff;
-    font-size:15px;
-    font-weight:bold;
-    padding:6px 10px;
-    width:1370px;
-}
-    .milestone-title, .responsible, .status, .complete, .orig-due, .due-date { float:left; margin-right:15px; }
-            
-    .milestone-title { width:540px }
-    .responsible { width:180px }
-    .status { width:120px; text-align:center;-webkit-border-radius:3px;
-             -khtml-border-radius:3px;
-               -moz-border-radius:3px;
-                    border-radius:3px }
-   
-    .complete { width:110px; text-align:center }
-    .orig-due { width:140px }
-    .due-date { width:140px }*/
-
-.milestonCtn {
-   color:#fff;
-   font-size:13px;
-   width:100%;
-   margin-left:10px;
-}
-.milestonCtn h1 {
-    margin:20px 0 15px;
-    font:normal 1.8em 'Droid Sans', serif;
-    float:left;
-}
-.milestonCtn h2 {
-    font:normal 14px 'Droid Sans', serif;
-    float:right;
-    color:#c9c8c8;
-    margin:30px 0 0;
-}
-.milestoneContent { background: #202020; }
-.milestoneContent:nth-child(even) {background: none}
-
-.milestoneContent { line-height:18px; padding:15px 0px; width:100%;  }
-
-.milestoneHeading {
-   background:#69af3b;
-   color:#fff;
-   font-size:15px;
-   font-weight:bold;
-   padding:6px 0px;
-   width:100%;
-}
-   .milestone-title, .responsible, .status, .complete, .orig-due, .due-date { float:left; margin-right:15px }
-           
-   .milestone-title { width:40%; margin-left:10px }
-   .responsible { width:10% }
-   .status { 
-       width:10%;
-       text-align:center;
-       -webkit-border-radius:3px;
-        -khtml-border-radius:3px;
-          -moz-border-radius:3px;
-               border-radius:3px }
-   .complete { width:10%; text-align:center }
-   .orig-due { width:10% }
-   .due-date { width:10% }
+.globalfooter { margin:0 10px }
+.pagemilestone footer { margin:0 }

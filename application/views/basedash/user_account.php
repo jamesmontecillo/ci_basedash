@@ -27,12 +27,12 @@ if (!defined('BASEPATH'))
 
                 <div class="left">
                     <label>Password:</label>
-                    <input type="password" name="password" value="<?php echo $user_data['password']; ?>" class="field regfield required" readonly="readonly"/>
+                    <input type="password" name="password" value="" class="field regfield required" readonly="readonly"/>
                 </div>
 
                 <div class="left">
                     <label>Confirm Password:</label>
-                    <input type="password" name="confirm_password" value="<?php echo $user_data['password']; ?>" class="field regfield required" readonly="readonly"/>
+                    <input type="password" name="confirm_password" value="" class="field regfield required" readonly="readonly"/>
                 </div>
 
                 <div class="left">
