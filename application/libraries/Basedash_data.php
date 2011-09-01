@@ -130,10 +130,10 @@ class Basedash_data {
             $this->project_summary['data'][$i]['status'] = $status;
 
             $milestone_array = $this->CI->response_get->getMilestoneReponse($project_data['project_id']);
-            $j = 0;
+            
             if (!is_null($milestone_array)) {
                 foreach ($milestone_array['data'] as $milestone_data) {
-                    if (!is_null($milestone_array['data'][$j]['milestone_completed'])) {
+                    if (!is_null($milestone_data['milestone_completed'])) {
                         $milestone_completed = $milestone_data['milestone_completed'];
                         $milestone_deadline = $milestone_data['milestone_deadline'];
                         break;

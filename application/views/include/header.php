@@ -40,8 +40,8 @@ if ($current_segment == 'site'){
     <script src="<?php echo base_url(); ?>js/jquery_ui_sortable.js"></script>
     <script type="text/javascript">
         $(function() {
-            $( ".dashletCtn" ).sortable({
-                connectWith: ".dashletCtn",
+            $( ".dashletWrap" ).sortable({
+                connectWith: ".dashletWrap",
                 revert: true,
                 cursor: 'move',
                 opacity: 0.8,
@@ -56,7 +56,7 @@ if ($current_segment == 'site'){
                     });
                 }
             });
-            $( ".dashletCtn" ).disableSelection();
+            $( ".dashletWrap" ).disableSelection();
         });
     </script>
     <script type="text/javascript">
@@ -76,7 +76,7 @@ if ($current_segment == 'site'){
         
     <script type="text/javascript">
         $(document).ready(function(){
-            $('.dashletBtn ul li a').click(function(){
+            $('.dashletCount ul li a').click(function(){
                 var url = $(this).attr('href');
 //                alert (url);
                 $.post(url,processData);
@@ -117,7 +117,7 @@ if ($current_segment == 'site'){
             {
                 $("body").css({'width' : myWidth});
                 var divbodywidth = "<?php if (isset($dashlet)){ echo $dashlet; } ?>";
-                $(".dashboardCtn").css({'width' : divbodywidth});
+                $(".adjusted-width").css({'width' : divbodywidth});
                 if (myWidth <= divbodywidth){
                     $("body").css({'width' : divbodywidth});
                 }else{

@@ -34,149 +34,152 @@ foreach ($basedash_data as $data) {
     }
 }
 ?>
-<aside class="darkWrapBg" >
-    <div class="userPanel">
-        <ul id="navigation-1">
-            <li style="width: auto;"> <a href="#">Welcome! <?php echo $username; ?></a></li>
-            <li><a href="#" title="Options">Options</a>
-                <ul class="navigation-2">
-                    <li><a class="popupAccountSettings" href="site/user_account" title="Account Settings">Account Settings</a></li>
-                    <li><a class="popupAccountBilling" href="index.php?module=Accounts&action=billing" title="Billing Information:">Billing Information</a></li>
-                </ul>
-            </li>
-            <li><a href="home/logout">Logout</a></li>
-            <li class="hlight">
-<?php
-if (isset($user_data['daysleft'])) {
-    echo $user_data['daysleft'];
-}
-?></li>
-        </ul>
-    </div>
-</aside>
-<div class="dashboardCtn">
-    <header class="header left">
-        <div class="imgLogo left">
-<?php
-if (empty($logo)) {
-    echo '<img src="images/dashboard/default.png" height="70px"/>';
-} else {
-    echo '<img src="' . $logo . '" height="70px"/>';
-}
-?>
-        </div>
-        <hgroup class="right" style="margin-right: 5px;">
-            <h1><?php echo $basedash_projects ?></h1> <span class="topSub">projects</span>
-        </hgroup>
-    </header>
-
-    <section class="statBtn">
-        <ul>
-            <li class="whiteb <?php if ($project_view == 'all') {
-                echo 'active';
-            } ?>"><a href="?view=all">all</a></li>
-            <?php if ($num_red != 0) { ?><li class="redb <?php if ($project_view == 'red') {
-                echo 'active';
-            } ?>"><a href="?view=red">red (<?php echo $num_red; ?>)</a></li><?php } ?>
-            <?php if ($num_orange != 0) { ?><li class="orangeb <?php if ($project_view == 'orange') {
-                echo 'active';
-            } ?>"><a href="?view=orange">orange (<?php echo $num_orange; ?>)</a></li><?php } ?>
-<?php if ($num_yellow != 0) { ?><li class="yellowb <?php if ($project_view == 'yellow') {
-        echo 'active';
-    } ?>"><a href="?view=yellow">yellow (<?php echo $num_yellow; ?>)</a></li><?php } ?>
-<?php if ($num_green != 0) { ?><li class="greenb <?php if ($project_view == 'green') {
-        echo 'active';
-    } ?>"><a href="?view=green">green (<?php echo $num_green; ?>)</a></li><?php } ?>
-            <?php if ($num_disabled != 0) { ?><li class="disb <?php if ($project_view == 'disabled') {
-                echo 'active';
-            } ?>"><a href="?view=disabled">disabled (<?php echo $num_disabled; ?>)</a></li><?php } ?>
-            <li class="disb <?php if ($project_view == 'update') {
-                echo 'active';
-            } ?>"><a href="site/update?return_view=<?php echo $project_view; ?>" title="Update Projects:">Update</a></li>
-        </ul>
+    <section class="fullwidth darkBg">
+        <nav class="adjusted-width darkBg" style="height:25px;">
+            <ul class="dropdown mright10">
+                <li class="nobg"><a href="#">Welcome: <?php echo $username; ?></a></li>
+                <li class="subnav">Options
+                    <ul>
+                        <li><a class="popupAccountSettings" href="site/user_account" title="Account Settings">Account Settings</a></li>
+                        <li><a class="popupAccountBilling" href="site/user_billing" title="Billing Information:">Billing Information</a></li>
+                    </ul>
+                </li>
+                <li><a href="home/logout">Logout</a></li>
+            </ul>
+        </nav>
     </section>
 
-    <section class="dashletBtn">
-        <ul>
-            <?php
-            $i = 1;
-            foreach ($basedash_data as $data) {
-                $class = '';
-                $width = $i * 345;
-                if ($i == 3) {
-                    if ($dashlet == $width) {
-                        $class = "class='greenb'";
-                    }
-                    echo '<li ' . $class . '><a href="site/change_project_dashlet?project_dashlet=' . $width . '&ident=' . $user_data['ident'] . '">' . $i . '</a></li>';
+    <section class="adjusted-width">
+        <header class="header mleftright">
+            <div class="imgLogo left">
+                <?php
+                if (empty($logo)) {
+                    echo '<img src="images/dashboard/default.png" height="70px"/>';
+                } else {
+                    echo '<img src="' . $logo . '" height="70px"/>';
                 }
-                if (($i >= 4) && (!($i % 2)) && ($i <= 10)) {
-                    if ($dashlet == $width) {
-                        $class = "class='greenb'";
-                    }
-                    echo '<li ' . $class . '><a href="site/change_project_dashlet?project_dashlet=' . $width . '&ident=' . $user_data['ident'] . '">' . $i . '</a></li>';
-                }
-                $i++;
-            }
-            ?>
-        </ul>
-    </section>
-
-    <section class="clear left dashletCtn">
-        <?php
-        $k = 0;
-        $current_view = $project_view;
-        foreach ($basedash_data as $data) {
-            if ($project_view == 'all') {
-                $project_view = $data['color'];
-                $view_all = true;
-                $view_disabled = false;
-            }
-
-
-            if ($project_view == 'disabled') {
-                $project_view = $data['color'];
-                $view_all = false;
-                $view_disabled = true;
-            }
-
-            if (($data['color'] == $project_view) && ($data['enabled'] == $project_enabled)) {
                 ?>
-                <!-- start of widget -->
-                <div class="widgetCtn" id="id_<?php echo $data['id']; ?>">
-                    <div class="widgetTitle">
-                        <form action="">
-                            <h2>
-                                <input type="checkbox" name="<?php echo $data['id']; ?>" value="<?php echo $data['id']; ?>" onclick="disableproject(this.value)" title="Disable Widget"/>
-        <?php echo $data['title']; ?>
-                            </h2>
-                        </form>
-        <!--                            <a href="https://remotelink1.basecamphq.com/projects/<?php echo $data['id']; ?>/posts" target="blank"><img src="images/dashboard/arrow.png" class="right imgArrow"/></a>-->
-                        <a href="<?php echo $user_data['basecamp_url']; ?>/projects/<?php echo $data['id']; ?>/posts" target="blank" title="Goto Basecamp" ><img src="images/dashboard/arrow.png" class="right imgArrow"/></a>
-                    </div>
-                    <div class="widgetText">
-                        <div class="update">updated
-        <?php echo $data['last_update']; ?>
+            </div>
+            <hgroup class="projects">
+                <h1><?php echo $basedash_projects ?></h1> <span class="topSub">projects</span>
+            </hgroup>
+        </header>
 
-                            <span class="milestone"><a href="site/milestone?return_view=<?php echo $current_view; ?>&pid=<?php echo $data['id']; ?>">Milestone</a></span>
+        <nav class="statBtn mleft10">
+            <ul>
+                <li class="whiteb <?php if ($project_view == 'all') {
+                    echo 'active';
+                } ?>"><a href="?view=all">all</a></li>
+                <?php if ($num_red != 0) { ?><li class="redb <?php if ($project_view == 'red') {
+                    echo 'active';
+                } ?>"><a href="?view=red">red (<?php echo $num_red; ?>)</a></li><?php } ?>
+                <?php if ($num_orange != 0) { ?><li class="orangeb <?php if ($project_view == 'orange') {
+                    echo 'active';
+                } ?>"><a href="?view=orange">orange (<?php echo $num_orange; ?>)</a></li><?php } ?>
+                <?php if ($num_yellow != 0) { ?><li class="yellowb <?php if ($project_view == 'yellow') {
+                        echo 'active';
+                    } ?>"><a href="?view=yellow">yellow (<?php echo $num_yellow; ?>)</a></li><?php } ?>
+                <?php if ($num_green != 0) { ?><li class="greenb <?php if ($project_view == 'green') {
+                        echo 'active';
+                    } ?>"><a href="?view=green">green (<?php echo $num_green; ?>)</a></li><?php } ?>
+                <?php if ($num_disabled != 0) { ?><li class="disb <?php if ($project_view == 'disabled') {
+                    echo 'active';
+                } ?>"><a href="?view=disabled">disabled (<?php echo $num_disabled; ?>)</a></li><?php } ?>
+                <li class="disb <?php if ($project_view == 'update') {
+                    echo 'active';
+                } ?>"><a href="site/update?return_view=<?php echo $project_view; ?>" title="Update Projects:">Update</a></li>
+            </ul>
+        </nav>
 
-                        </div>
-                        <div class="contentText"><?php echo $data['status']; ?></div>
-                        <div class="statusCtn">
-                            <div class="sub"><?php echo $data['total_done']; ?> of <?php echo $data['total_items']; ?> to do's complete</div>
-                            <div class="right"><h3 class="<?php echo $data['milestonecolor']; ?>txt"><?php
+       <aside class="dashletCount">
+            <ul>
+                <?php
+                $i = 1;
+                foreach ($basedash_data as $data) {
+                    $class = '';
+                    $width = $i * 345;
+                    if ($i == 3) {
+                        if ($dashlet == $width) {
+                            $class = "class='greenb'";
+                        }
+                        echo '<li ' . $class . '><a href="site/change_project_dashlet?project_dashlet=' . $width . '&ident=' . $user_data['ident'] . '">' . $i . '</a></li>';
+                    }
+                    if (($i >= 4) && (!($i % 2)) && ($i <= 10)) {
+                        if ($dashlet == $width) {
+                            $class = "class='greenb'";
+                        }
+                        echo '<li ' . $class . '><a href="site/change_project_dashlet?project_dashlet=' . $width . '&ident=' . $user_data['ident'] . '">' . $i . '</a></li>';
+                    }
+                    $i++;
+                }
+                ?>
+            </ul>
+        </aside>
+    </section>
+
+    <div class="clear"></div>
+    <section class="adjusted-width dashletWrap">
+        <?php
+            $k = 0;
+            $current_view = $project_view;
+            foreach ($basedash_data as $data) {
+                if ($project_view == 'all') {
+                    $project_view = $data['color'];
+                    $view_all = true;
+                    $view_disabled = false;
+                }
+
+
+                if ($project_view == 'disabled') {
+                    $project_view = $data['color'];
+                    $view_all = false;
+                    $view_disabled = true;
+                }
+
+                if (($data['color'] == $project_view) && ($data['enabled'] == $project_enabled)) {
+        ?>
+        <!-- start of widget -->
+        <div class="widgetCtn" id="id_<?php echo $data['id']; ?>">
+            <div class="widgetTitle">
+                <form action="">
+                    <h2>
+                        <input type="checkbox" name="<?php echo $data['id']; ?>" value="<?php echo $data['id']; ?>" onclick="disableproject(this.value)" title="Disable Widget"/><?php echo $data['title']; ?>
+                    </h2>
+                </form>
+                <a href="<?php echo $user_data['basecamp_url']; ?>/projects/<?php echo $data['id']; ?>/posts" target="blank" title="Goto Basecamp" ><img src="images/dashboard/arrow.png" class="right imgArrow"/></a>
+            </div>
+            
+            <div class="widgetText">
+                <div class="update">
+                    updated
+                    <?php echo $data['last_update']; ?>
+
+                    <span class="milestone"><a href="site/milestone?return_view=<?php echo $current_view; ?>&pid=<?php echo $data['id']; ?>">Milestone</a></span>
+                </div>
+                
+                <div class="contentText"><?php echo $data['status']; ?></div>
+                
+                <div class="statusCtn">
+                    <div class="sub"><?php echo $data['total_done']; ?> of <?php echo $data['total_items']; ?> to do's complete</div>
+                    <div class="right">
+                        <h3 class="<?php echo $data['milestonecolor']; ?>text">
+                        <?php
                             if (round($data['progress']) < 100) {
                                 echo $data['milestonedue'];
                             } else {
-                                ?><img src="images/dashboard/complete.png" alt="Project Completed" /><?php } ?> </h3></div>
-                            <div class="progress-status">
-                                <div style="width: <?php echo round($data['progress']); ?>%" class="<?php echo $data['color']; ?>"><?php echo round($data['progress']); ?>% &nbsp;</div>
-                            </div>
-                        </div>
+                        ?>
+                        <img src="images/dashboard/complete.png" alt="Project Completed" />
+                        <?php } ?> 
+                        </h3>
+                    </div>
+                    <div class="progress-status">
+                        <div style="width: <?php echo round($data['progress']); ?>%" class="<?php echo $data['color']; ?>"><?php echo round($data['progress']); ?>% &nbsp;</div>
                     </div>
                 </div>
-                <!-- end of widget -->
-
-                <?php
+            </div>
+        </div>
+        <!-- end of widget -->
+        <?php
             } else {
                 $k++;
             }
@@ -192,7 +195,7 @@ if (empty($logo)) {
         }
         ?>
     </section>
-</div><!-- End of dashboardCtn -->
+
 <?php
 //    global $basedash_config;
 //    $ch = curl_init();
@@ -205,12 +208,3 @@ if (empty($logo)) {
 //    curl_close($ch);
 //    echo $result;
 ?>
-
-<div class="darkWrapBgBD">
-    <footer class="footerBD">
-        <div class="dashboard">
-            Basedash
-            <img src="images/dashboard/logo-footer.png" height="30px" style="margin:0 30px 0 0"/>
-        </div>
-    </footer>
-</div>

@@ -202,6 +202,16 @@ class Site extends CI_Controller {
             }
         }
     }
+    
+    function user_billing() {
+        $this->is_logged_in();
+        $user_data = $this->get_session_data();
+        $data['main_content'] = 'basedash/user_billing';
+        $data['user_data'] = $user_data;
+        $data['account_error'] = $this->session->userdata('account_error');
+        $this->load->view('include/template', $data);
+    }
+    
 }
 
 ?>

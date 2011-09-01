@@ -33,100 +33,68 @@ foreach ($basedash_data as $data) {
     }
 }
 ?>
-<aside class="darkWrapBg" >
-    <div class="userPanel">
-        <ul id="navigation-1">
-            <li style="width: auto;"> <a href="#">Welcome! <?php echo $username; ?></a></li>
-            <li><a href="#" title="Options">Options</a>
-                <ul class="navigation-2">
-                    <li><a class="popupAccountSettings" href="site/user_account" title="Account Settings">Account Settings</a></li>
-                    <li><a class="popupAccountBilling" href="index.php?module=Accounts&action=billing" title="Billing Information:">Billing Information</a></li>
-                </ul>
-            </li>
-            <li><a href="home/logout">Logout</a></li>
-            <li class="hlight">
-                <?php
-                if (isset($user_data['daysleft'])) {
-                    echo $user_data['daysleft'];
-                }
-                ?></li>
-        </ul>
+    <div class="fullwidth darkBg">
+        <nav class="pagemilestone" style="height:25px;" >
+            <ul class="dropdown">
+                <li class="nobg"><a href="#">Welcome: <?php echo $username; ?></a></li>
+                <li class="subnav">Options
+                    <ul>
+                        <li><a class="popupAccountSettings" href="site/user_account" title="Account Settings">Account Settings</a></li>
+                        <li><a class="popupAccountBilling" href="index.php?module=Accounts&action=billing" title="Billing Information:">Billing Information</a></li>
+                    </ul>
+                </li>
+                <li><a href="home/logout">Logout</a></li>
+            </ul>
+        </nav>
     </div>
-</aside>
-<div class="dashboardCtn">
-    <header class="header left">
-        <div class="imgLogo left">
+    <div class="pagemilestone">
+        <section class="fullwidth">
+            <header class="header">
+                <div class="imgLogo left">
+                    <?php
+                    if (empty($logo)) {
+                        echo '<img src="images/dashboard/default.png" height="70px"/>';
+                    } else {
+                        echo '<img src="' . $logo . '" height="70px"/>';
+                    }
+                    ?>
+                </div>
+                <hgroup class="projects">
+                    <h1><?php echo $basedash_projects ?></h1> <span class="topSub">projects</span>
+                </hgroup>
+            </header>
+
+            <div class="clear"></div>
+
+            <nav class="statBtn">
+                <ul>
+                    <li class="whiteb <?php if ($project_view == 'all') { echo 'active'; } ?>"><a href="../site?view=all">all</a></li>
+                    <?php if ($num_red != 0) { ?><li class="redb <?php if ($project_view == 'red') { echo 'active'; } ?>"><a href="../site?view=red">red (<?php echo $num_red; ?>)</a></li><?php } ?>
+                    <?php if ($num_orange != 0) { ?><li class="orangeb <?php if ($project_view == 'orange') { echo 'active'; } ?>"><a href="../site?view=orange">orange (<?php echo $num_orange; ?>)</a></li><?php } ?>
+                    <?php if ($num_yellow != 0) { ?><li class="yellowb <?php if ($project_view == 'yellow') { echo 'active'; } ?>"><a href="../site?view=yellow">yellow (<?php echo $num_yellow; ?>)</a></li><?php } ?>
+                    <?php if ($num_green != 0) { ?><li class="greenb <?php if ($project_view == 'green') { echo 'active'; } ?>"><a href="../site?view=green">green (<?php echo $num_green; ?>)</a></li><?php } ?>
+                    <?php if ($num_disabled != 0) { ?><li class="disb <?php if ($project_view == 'disabled') { echo 'active'; } ?>"><a href="../site?view=disabled">disabled (<?php echo $num_disabled; ?>)</a></li><?php } ?>
+                    <li class="disb <?php if ($project_view == 'update') { echo 'active'; }?>"><a href="../site/update?return_view=<?php echo $project_view; ?>" title="Update Projects:">Update</a></li>
+                </ul>
+            </nav>
+        </section>
+
+        <section class="clear left milestonCtn">
+            <h1>Project Name: <b> <?php echo $project_name; ?></b></h1>
+            <h2>Project Milestones As of <?php echo date('M j, Y'); ?></h2>
+            <div class="milestoneHeading left">
+                <div class="milestone-title">Title</div>
+                <div class="responsible">Responsible</div>
+                <div class="status">Status</div>
+                <div class="complete">% Completed</div>
+                <div class="orig-due">Orig Due</div>
+                <div class="due-date">Due Date</div>
+            </div>
             <?php
-            if (empty($logo)) {
-                echo '<img src="images/dashboard/default.png" height="70px"/>';
-            } else {
-                echo '<img src="' . $logo . '" height="70px"/>';
-            }
-            ?>
-        </div>
-        <hgroup class="right" style="margin-right: 5px;">
-            <h1><?php echo $basedash_projects ?></h1> <span class="topSub">projects</span>
-        </hgroup>
-    </header>
-
-    <section class="statBtn">
-        <ul>
-            <li class="whiteb <?php
-            if ($project_view == 'all') {
-                echo 'active';
-            }
-            ?>"><a href="../site?view=all">all</a></li>
-            <?php if ($num_red != 0) { ?><li class="redb <?php
-            if ($project_view == 'red') {
-                echo 'active';
-            }
-                ?>"><a href="../site?view=red">red (<?php echo $num_red; ?>)</a></li><?php } ?>
-            <?php if ($num_orange != 0) { ?><li class="orangeb <?php
-            if ($project_view == 'orange') {
-                echo 'active';
-            }
-                ?>"><a href="../site?view=orange">orange (<?php echo $num_orange; ?>)</a></li><?php } ?>
-            <?php if ($num_yellow != 0) { ?><li class="yellowb <?php
-            if ($project_view == 'yellow') {
-                echo 'active';
-            }
-                ?>"><a href="../site?view=yellow">yellow (<?php echo $num_yellow; ?>)</a></li><?php } ?>
-            <?php if ($num_green != 0) { ?><li class="greenb <?php
-            if ($project_view == 'green') {
-                echo 'active';
-            }
-                ?>"><a href="../site?view=green">green (<?php echo $num_green; ?>)</a></li><?php } ?>
-            <?php if ($num_disabled != 0) { ?><li class="disb <?php
-            if ($project_view == 'disabled') {
-                echo 'active';
-            }
-                ?>"><a href="../site?view=disabled">disabled (<?php echo $num_disabled; ?>)</a></li><?php } ?>
-            <li class="disb <?php
-                if ($project_view == 'update') {
-                    echo 'active';
-                }
-            ?>"><a href="../site/update?return_view=<?php echo $project_view; ?>" title="Update Projects:">Update</a></li>
-        </ul>
-    </section>
-
-    <section class="clear left milestonCtn">
-        <?php
-        echo "<h1>Project Name: <b>" . $project_name . "</b></h1>";
-        echo "<h2>Project Milestones As of " . date('M j, Y') . "</h2>";
-        ?>
-        <div class="milestoneHeading left">
-            <div class="milestone-title">Title</div>
-            <div class="responsible">Responsible</div>
-            <div class="status">Status</div>
-            <div class="complete">% Completed</div>
-            <div class="orig-due">Orig Due</div>
-            <div class="due-date">Due Date</div>
-        </div>
-        <?php
-        if (!empty($project_milestone_order)) {
-            foreach ($project_milestone_order as $milestone_data) {
-                ?>
-                <div class="milestoneContent left">
+            if (!empty($project_milestone_order)) {
+                foreach ($project_milestone_order as $milestone_data) {
+                    ?>
+                <div class="milestoneContent left">                   
                     <div class="milestone-title">
                         <?php echo $milestone_data['milestone_title']; ?>
                     </div>
@@ -147,12 +115,12 @@ foreach ($basedash_data as $data) {
                     </div>
                 </div>
                 <!-- end -->
-                <?php
-            }
-        }
-        ?>
-    </section>
-</div><!-- End of dashboardCtn -->
+            <?php 
+                }
+            } 
+            ?>
+        </section>
+    </div>
 <?php
 //    global $basedash_config;
 //    $ch = curl_init();
@@ -165,12 +133,3 @@ foreach ($basedash_data as $data) {
 //    curl_close($ch);
 //    echo $result;
 ?>
-
-<div class="darkWrapBgBD">
-    <footer class="footerBD">
-        <div class="dashboard">
-            Basedash
-            <img src="images/dashboard/logo-footer.png" height="30px" style="margin:0 30px 0 0"/>
-        </div>
-    </footer>
-</div>

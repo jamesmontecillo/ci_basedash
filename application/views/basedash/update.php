@@ -3,12 +3,12 @@
 $username = $user_data['username'];
 $logo = $user_data['logo'];
 ?>
-<aside class="darkWrapBg" >
-    <div class="userPanel">
-        <ul id="navigation-1">
-            <li style="width: auto;"> <a href="#">Welcome! <?php echo $username; ?></a></li>
-            <li><a href="#" title="Options">Options</a>
-                <ul class="navigation-2">
+<div class="fullwidth darkBg">
+    <nav class="pagemilestone" style="height:25px;" >
+        <ul class="dropdown">
+            <li class="nobg"><a href="#">Welcome: <?php echo $username; ?></a></li>
+            <li class="subnav">Options
+                <ul>
                     <li><a class="popupAccountSettings" href="index.php?module=Accounts&action=accounts" title="Account Settings">Account Settings</a></li>
                     <li><a class="popupAccountBilling" href="index.php?module=Accounts&action=billing" title="Billing Information:">Billing Information</a></li>
                 </ul>
@@ -16,40 +16,30 @@ $logo = $user_data['logo'];
             <li><a href="home/logout">Logout</a></li>
             <li class="hlight">
                 <?php
-                if (isset($user_data['daysleft'])) {
-                    echo $user_data['daysleft'];
+                    if (isset($user_data['daysleft'])) {
+                        echo $user_data['daysleft'];
+                    }
+                ?>
+            </li>
+        </ul>
+    </nav>
+</div>
+
+<div class="pagemilestone">
+    <section class="">
+        <header class="header">
+            <div class="imgLogo left">
+                <?php
+                if (empty($logo)) {
+                    echo '<img src="images/dashboard/default.png" height="70px"/>';
+                } else {
+                    echo '<img src="' . $logo . '" height="70px"/>';
                 }
-                ?></li>
-        </ul>
-    </div>
-</aside>
-<div class="dashboardCtn">
-    <header class="header left">
-        <div class="imgLogo left">
-            <?php
-            if (empty($logo)) {
-                echo '<img src="images/dashboard/default.png" height="70px"/>';
-            } else {
-                echo '<img src="' . $logo . '" height="70px"/>';
-            }
-            ?>
-        </div>
-
-        <hgroup class="right" style="margin-right: 5px;">
-            <h1>&nbsp;</h1> <span class="topSub">&nbsp;</span>
-        </hgroup>
-    </header>
-
-    <section class="statBtn">
-        <ul>
-            <li class="disb active"><a href="#" title="Update Projects:">Updating Projects</a></li>
-        </ul>
+                ?>
+            </div>
+        </header>
     </section>
-
-    <div class="clear"></div>
-
-    <section class="dashletCtn1">
-
+    <section class="resultXml">
         <script type="text/javascript">
             setTimeout("loadingAjax()",3000);
             function loadingAjax(){
@@ -72,35 +62,12 @@ $logo = $user_data['logo'];
                 });
             }
         </script>
-
-        <section class="resultXml">
-            <img src="<?php echo base_url(); ?>images/homepage/image1.png" />
-            <div class="resultXmlTxt">
-                <img src='<?php echo base_url(); ?>images/dashboard/load.gif' alt='loading...' />
-                <p>Loading up your Basecamp projects...</p>
-                <p>Please Wait.</p>
-            </div>
-        </section>
-
+            <h1>Updating Projects</h1>
+                <img src="<?php echo base_url(); ?>images/dashboard/resultXML-header.png" />
+                <div class="resultXmlTxt" id="resultXmlTxt">
+                    <img src='<?php echo base_url(); ?>images/dashboard/load.gif' alt='loading...' />
+                    <p>Loading up your Basecamp projects...</p>
+                    <p>Please Wait.</p>
+                </div>
     </section>
-</div><!-- End of dashboardCtn -->
-<?php
-//    global $basedash_config;
-//    $ch = curl_init();
-//    curl_setopt($ch, CURLOPT_URL, 'http://abcache.remotelink.com/abcache');
-//    curl_setopt($ch, CURLOPT_POST, 1);
-//    $url = 'url='.$basedash_config['site_url'].'/index.php?module=Generate&action=generate&uid=' . $_SESSION['UID'] . '&token=' . $_SESSION['token'] . '&basecampUrl=' . $_SESSION['basecampUrl'];   
-//    curl_setopt($ch, CURLOPT_POSTFIELDS, $url);
-//    $result = curl_exec($ch);
-//    curl_close($ch);
-//    echo $result;
-?>
-
-<div class="darkWrapBgBD">
-    <footer class="footerBD">
-        <div class="dashboard">
-            Basedash
-            <img src="<?php echo base_url(); ?>images/dashboard/logo-footer.png" height="30px" style="margin:0 30px 0 0"/>
-        </div>
-    </footer>
 </div>

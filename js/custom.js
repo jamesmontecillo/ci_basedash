@@ -101,7 +101,7 @@ jQuery(document).ready(function() {
     });
     $(".popupAccountBilling").colorbox({
         width:"800px",
-        height:"520px",
+        height:"550px",
         iframe:true,
         overlayClose:false,
         onClosed:function(){ window.location.reload(); }
