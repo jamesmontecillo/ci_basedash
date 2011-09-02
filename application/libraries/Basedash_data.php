@@ -388,7 +388,9 @@ class Basedash_data {
     }
 
     function getProjectMileStoneSummary() {
-        $this->project_milestone_summary['milestone'] = $this->array_sort($this->project_milestone_summary['milestone'], 'milestone_order', SORT_ASC);
+        if (!empty($this->project_milestone_summary['milestone'])){
+            $this->project_milestone_summary['milestone'] = $this->array_sort($this->project_milestone_summary['milestone'], 'milestone_order', SORT_ASC);
+        }
         return $this->project_milestone_summary;
     }
 
