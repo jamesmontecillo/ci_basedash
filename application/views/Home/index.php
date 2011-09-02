@@ -154,9 +154,3 @@
     </div>
     <!-- END OF OTHER PRODUCTS -->
 </section>
-
-<div class="darkWrapBg">
-    <footer class="footer">
-        <img src="images/homepage/logo.png"/>
-    </footer>
-</div>

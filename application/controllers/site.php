@@ -12,7 +12,7 @@ class Site extends CI_Controller {
 
     function index() {
         $this->is_logged_in();
-        $user_data = $this->get_session_data();
+        $user_data = $this->_get_session_data();
 //        print_r($user_data);
         $this->load->model('basedash/basedash_model');
 
@@ -71,7 +71,7 @@ class Site extends CI_Controller {
 
     function update() {
         $this->is_logged_in();
-        $user_data = $this->get_session_data();
+        $user_data = $this->_get_session_data();
         $data['main_content'] = 'basedash/update';
         $data['user_data'] = $user_data;
 
@@ -89,7 +89,7 @@ class Site extends CI_Controller {
 
     function milestone() {
         $this->is_logged_in();
-        $user_data = $this->get_session_data();
+        $user_data = $this->_get_session_data();
         $this->load->model('basedash/basedash_model');
 
         $view = $this->input->get('return_view');
@@ -143,7 +143,7 @@ class Site extends CI_Controller {
         }
     }
 
-    function get_session_data() {
+    function _get_session_data() {
         $session_data['username'] = $this->session->userdata('username');
         $session_data['password'] = $this->session->userdata('password');
         $session_data['ident'] = $this->session->userdata('ident');
@@ -169,7 +169,7 @@ class Site extends CI_Controller {
 
     function user_account() {
         $this->is_logged_in();
-        $user_data = $this->get_session_data();
+        $user_data = $this->_get_session_data();
         $data['main_content'] = 'basedash/user_account';
         $data['user_data'] = $user_data;
         $data['account_error'] = $this->session->userdata('account_error');
@@ -203,7 +203,7 @@ class Site extends CI_Controller {
     
     function user_billing() {
         $this->is_logged_in();
-        $user_data = $this->get_session_data();
+        $user_data = $this->_get_session_data();
         $data['main_content'] = 'basedash/user_billing';
         $data['user_data'] = $user_data;
         $data['account_error'] = $this->session->userdata('account_error');
