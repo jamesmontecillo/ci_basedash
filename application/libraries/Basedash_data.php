@@ -319,66 +319,68 @@ class Basedash_data {
     function getMileStoneDueDate($username, $password, $milestone ) {      
         $this->CI->load->library('Api_access');
         $j  = 0;
-        foreach ($milestone['milestone'] as $milestone_data){
-            $response = $this->CI->api_access->ApiGetMileStone($username, $password, $milestone['project_id'], $milestone_data['milestone_id']);
-            $result = $this->getResponseArray($response);
-            
-            $milestone_deadline = new DateTime($milestone_data['milestone_deadline'], new DateTimeZone('America/Chicago'));
-            $milestone_deadline = date_format($milestone_deadline, 'Y-m-d');
-            
-            $completed_date = new DateTime($milestone_data['milestone_due_date'], new DateTimeZone('America/Chicago'));
-            $completed_date = date_format($completed_date, 'Y-m-d');
-            if (empty($result['slip'])){
-                $result['slip'] = 0;
-            }
-            if ($result['slip'] != 0) {
-                $finishdate = trim($result['finishdate']);
-                if (($finishdate != "NONE") && (!empty($finishdate))) {
-                    $completed_date = $finishdate;
+        if (!empty($milestone['milestone'])){
+            foreach ($milestone['milestone'] as $milestone_data){
+                $response = $this->CI->api_access->ApiGetMileStone($username, $password, $milestone['project_id'], $milestone_data['milestone_id']);
+                $result = $this->getResponseArray($response);
+
+                $milestone_deadline = new DateTime($milestone_data['milestone_deadline'], new DateTimeZone('America/Chicago'));
+                $milestone_deadline = date_format($milestone_deadline, 'Y-m-d');
+
+                $completed_date = new DateTime($milestone_data['milestone_due_date'], new DateTimeZone('America/Chicago'));
+                $completed_date = date_format($completed_date, 'Y-m-d');
+                if (empty($result['slip'])){
+                    $result['slip'] = 0;
                 }
+                if ($result['slip'] != 0) {
+                    $finishdate = trim($result['finishdate']);
+                    if (($finishdate != "NONE") && (!empty($finishdate))) {
+                        $completed_date = $finishdate;
+                    }
+                }
+
+                $milestone_deadline = strtotime($milestone_deadline);
+                $completed_date = strtotime($completed_date);
+
+                if ($completed_date >= $milestone_deadline ){
+                    $this->milestone_timestamp = $this->milestone_timestamp + ($completed_date - $milestone_deadline);
+                    $due_date = $this->milestone_timestamp + $milestone_deadline;
+                }else{
+                    $due_date = $this->milestone_timestamp + $completed_date;
+                }
+
+    //            echo $this->milestone_timestamp . "-";
+
+                $due_date = date('Y-m-d', $due_date);
+                $milestone_due_date = new DateTime($due_date, new DateTimeZone('America/Chicago'));
+
+
+                $this->project_milestone_summary['milestone'][$j]['milestone_id'] = $milestone_data['milestone_id'];
+
+                $this->project_milestone_summary['milestone'][$j]['milestone_title'] = $milestone_data['milestone_title'];
+
+                $this->project_milestone_summary['milestone'][$j]['milestone_responsible'] = $milestone_data['milestone_responsible'];
+
+                $this->project_milestone_summary['milestone'][$j]['total_completed'] = $milestone_data['total_completed'];
+
+                $this->project_milestone_summary['milestone'][$j]['total_uncompleted'] = $milestone_data['total_uncompleted'];
+
+                $this->project_milestone_summary['milestone'][$j]['progress'] = $milestone_data['progress'];
+
+                $this->project_milestone_summary['milestone'][$j]['milestone_color'] = $milestone_data['milestone_color'];
+
+                $this->project_milestone_summary['milestone'][$j]['status'] = $milestone_data['status'];
+
+                $this->project_milestone_summary['milestone'][$j]['milestone_deadline'] = $milestone_data['milestone_deadline'];
+
+                $this->project_milestone_summary['milestone'][$j]['milestone_due_date'] = date_format($milestone_due_date, 'M j, Y');
+
+                $this->project_milestone_summary['milestone'][$j]['milestone_order'] = $milestone_data['milestone_order'];
+
+    //            $this->project_milestone_summary['milestone'][$j]['milestone_slip_result'] = $result;
+
+                $j++;
             }
-            
-            $milestone_deadline = strtotime($milestone_deadline);
-            $completed_date = strtotime($completed_date);
-            
-            if ($completed_date >= $milestone_deadline ){
-                $this->milestone_timestamp = $this->milestone_timestamp + ($completed_date - $milestone_deadline);
-                $due_date = $this->milestone_timestamp + $milestone_deadline;
-            }else{
-                $due_date = $this->milestone_timestamp + $completed_date;
-            }
-            
-//            echo $this->milestone_timestamp . "-";
-            
-            $due_date = date('Y-m-d', $due_date);
-            $milestone_due_date = new DateTime($due_date, new DateTimeZone('America/Chicago'));
-
-            
-            $this->project_milestone_summary['milestone'][$j]['milestone_id'] = $milestone_data['milestone_id'];
-
-            $this->project_milestone_summary['milestone'][$j]['milestone_title'] = $milestone_data['milestone_title'];
-
-            $this->project_milestone_summary['milestone'][$j]['milestone_responsible'] = $milestone_data['milestone_responsible'];
-
-            $this->project_milestone_summary['milestone'][$j]['total_completed'] = $milestone_data['total_completed'];
-
-            $this->project_milestone_summary['milestone'][$j]['total_uncompleted'] = $milestone_data['total_uncompleted'];
-
-            $this->project_milestone_summary['milestone'][$j]['progress'] = $milestone_data['progress'];
-
-            $this->project_milestone_summary['milestone'][$j]['milestone_color'] = $milestone_data['milestone_color'];
-
-            $this->project_milestone_summary['milestone'][$j]['status'] = $milestone_data['status'];
-
-            $this->project_milestone_summary['milestone'][$j]['milestone_deadline'] = $milestone_data['milestone_deadline'];
-
-            $this->project_milestone_summary['milestone'][$j]['milestone_due_date'] = date_format($milestone_due_date, 'M j, Y');
-
-            $this->project_milestone_summary['milestone'][$j]['milestone_order'] = $milestone_data['milestone_order'];
-            
-//            $this->project_milestone_summary['milestone'][$j]['milestone_slip_result'] = $result;
-
-            $j++;
         }
     }
     
